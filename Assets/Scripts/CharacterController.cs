@@ -1,13 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using VContainer;
 
-public class MoveToClickPoint : MonoBehaviour
+public class CharacterController : MonoBehaviour
 {
     private NavMeshAgent _agent;
-    private readonly Queue<Vector3> _destinationPoints = new();
-    
+    private Queue<Vector3> _destinationPoints;
+
     private const string WALKABLE_AREA = "Walkable Area";
+
+    [Inject]
+    private void Construct(Queue<Vector3> destinationPoints)
+    {
+        _destinationPoints = destinationPoints;
+    }
 
     private void Start()
     {
