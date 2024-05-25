@@ -9,6 +9,7 @@ public class GameLifetimeScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterInstance<ICharacterFactory, CharacterFactory>(new CharacterFactory(_characterControllerPrefab, this));
+        builder.Register<IGameInitializer, GameInitializer>(Lifetime.Singleton);
         builder.RegisterEntryPoint<Boot>();
     }
 }
