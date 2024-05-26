@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
@@ -16,10 +17,13 @@ public class CharacterFactory : ICharacterFactory
     
     public CharacterController Create(PlayerProgress playerProgress)
     {
-        LifetimeScope childScope = _currentScope.CreateChild(builder => builder.RegisterInstance(new Queue<Vector3>(playerProgress.DestinationPoints)));
+        using LifetimeScope childScope = _currentScope.CreateChild(builder => builder.RegisterInstance(new Queue<Vector3>(playerProgress.DestinationPoints)));
+        
         CharacterController instance = childScope.Container.Instantiate(_prefab);
         instance.transform.position = playerProgress.Position;
         instance.transform.rotation = playerProgress.Rotation;
+        
+        SceneManager.MoveGameObjectToScene(instance.gameObject, SceneManager.GetActiveScene());
         return instance;
     }
 }
