@@ -2,7 +2,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-public class GameLifetimeScope : LifetimeScope
+public class RootScope : LifetimeScope
 {
     [SerializeField] private SceneConfig _sceneConfig;
     [SerializeField] private CharacterController _characterControllerPrefab;
