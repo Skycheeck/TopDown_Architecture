@@ -8,6 +8,8 @@ public class GameScope : LifetimeScope
 {
     protected override void Configure(IContainerBuilder builder)
     {
+        Parent.Container.Instantiate(Parent.Container.Resolve<GameConfig>().Level);
+        
         Canvas hud = Parent.Container.Resolve<IHUDFactory>().Create();
         SceneManager.MoveGameObjectToScene(hud.gameObject, SceneManager.GetActiveScene());
 

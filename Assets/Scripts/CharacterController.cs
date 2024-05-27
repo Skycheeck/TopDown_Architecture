@@ -1,17 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using VContainer;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class CharacterController : MonoBehaviour
 {
-    private NavMeshAgent _agent;
-    private Queue<Vector3> _destinationPoints;
+    [field: SerializeField] public NavMeshAgent NavMeshAgent;
+    private FixedQueue<Vector3> _destinationPoints;
 
     [Inject]
-    private void Construct(Queue<Vector3> destinationPoints) => _destinationPoints = destinationPoints;
-
-    private void Awake() => _agent = GetComponent<NavMeshAgent>();
+    private void Construct(FixedQueue<Vector3> destinationPoints) => _destinationPoints = destinationPoints;
 
     private void Update()
     {
@@ -19,19 +17,19 @@ public class CharacterController : MonoBehaviour
         if (_destinationPoints.Count < 1) return;
         
         // no path yet
-        if (!_agent.hasPath)
+        if (!NavMeshAgent.hasPath)
         {
             DequeueDestinationPoint();
             return;
         }
         
         // distance is too long
-        if (_agent.remainingDistance > _agent.stoppingDistance) return;
+        if (NavMeshAgent.remainingDistance > NavMeshAgent.stoppingDistance) return;
         
         DequeueDestinationPoint();
     }
 
     public void AddDestinationPoint(Vector3 destinationPoint) => _destinationPoints.Enqueue(destinationPoint);
 
-    private void DequeueDestinationPoint() => _agent.destination = _destinationPoints.Dequeue();
+    private void DequeueDestinationPoint() => NavMeshAgent.destination = _destinationPoints.Dequeue();
 }

@@ -5,7 +5,7 @@ using VContainer.Unity;
 
 public class Boot : IAsyncStartable 
 {
-    private SceneConfig _sceneConfig;
+    private readonly SceneConfig _sceneConfig;
 
     public Boot(SceneConfig sceneConfig) => _sceneConfig = sceneConfig;
 
