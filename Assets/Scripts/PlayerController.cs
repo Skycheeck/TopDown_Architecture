@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using VContainer.Unity;
 
 public class PlayerController : ITickable
@@ -10,7 +11,7 @@ public class PlayerController : ITickable
 
     public void Tick()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
+        if (!Input.GetMouseButtonDown(0) || EventSystem.current.IsPointerOverGameObject()) return;
         if (!Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 100)) return;
         if (!hit.collider.gameObject.CompareTag(WALKABLE_AREA)) return;
 

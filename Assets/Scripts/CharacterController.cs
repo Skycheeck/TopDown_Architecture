@@ -16,18 +16,8 @@ public class CharacterController : MonoBehaviour
 
     private void Update()
     {
-        // no destination points
         if (_destinationPoints.Count < 1) return;
-        
-        // no path yet
-        if (!NavMeshAgent.hasPath)
-        {
-            DequeueDestinationPoint();
-            return;
-        }
-        
-        // distance is too long
-        if (NavMeshAgent.remainingDistance > NavMeshAgent.stoppingDistance) return;
+        if (NavMeshAgent.hasPath) return;
         
         DequeueDestinationPoint();
     }
