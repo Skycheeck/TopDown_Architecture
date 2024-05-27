@@ -1,15 +1,16 @@
-﻿using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VContainer;
 
 [RequireComponent(typeof(Button))]
 public class StartButton : MonoBehaviour
 {
-    private IGameInitializer _gameInitializer;
+    private SceneConfig _sceneConfig;
 
     [Inject]
-    private void Construct(IGameInitializer gameInitializer) => _gameInitializer = gameInitializer;
+    private void Construct(SceneConfig sceneConfig) => _sceneConfig = sceneConfig;
 
-    private void Awake() => GetComponent<Button>().onClick.AddListener(() => _gameInitializer.InitializeAsync(CancellationToken.None));
+    private void Awake() => GetComponent<Button>().onClick.AddListener(
+            () => SceneManager.LoadScene(_sceneConfig.GameSceneIndex));
 }

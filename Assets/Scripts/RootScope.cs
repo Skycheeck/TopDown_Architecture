@@ -13,7 +13,6 @@ public class RootScope : LifetimeScope
         builder.RegisterInstance(_sceneConfig);
         builder.RegisterInstance<ICharacterFactory, CharacterFactory>(new CharacterFactory(_characterControllerPrefab, this));
         builder.Register<IHUDFactory, HUDFactory>(Lifetime.Singleton).WithParameter(_hudPrefab);
-        builder.Register<IGameInitializer, GameInitializer>(Lifetime.Singleton);
         builder.RegisterEntryPoint<Boot>();
     }
 }

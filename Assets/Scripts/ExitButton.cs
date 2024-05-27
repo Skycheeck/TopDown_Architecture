@@ -11,7 +11,6 @@ public class ExitButton : MonoBehaviour
     [Inject]
     private void Construct(SceneConfig sceneConfig) => _sceneConfig = sceneConfig;
 
-    private void Awake() => 
-        GetComponent<Button>().onClick.AddListener(
+    private void Awake() => GetComponent<Button>().onClick.AddListener(
         () => SceneManager.LoadScene(_sceneConfig.MenuSceneIndex));
 }
