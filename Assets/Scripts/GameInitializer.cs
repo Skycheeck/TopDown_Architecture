@@ -20,7 +20,11 @@ public class GameInitializer : IGameInitializer
     public async UniTask InitializeAsync(CancellationToken cancellation)
     {
         await SceneManager.LoadSceneAsync(_sceneConfig.GameSceneIndex, LoadSceneMode.Single).ToUniTask(cancellationToken: cancellation);
-        _hudFactory.Create();
-        _characterFactory.Create(new PlayerProgress {DestinationPoints = Enumerable.Empty<Vector3>()});
+
+        Canvas hud = _hudFactory.Create();
+        SceneManager.MoveGameObjectToScene(hud.gameObject, SceneManager.GetActiveScene());
+
+        CharacterController characterController = _characterFactory.Create(new PlayerProgress {DestinationPoints = Enumerable.Empty<Vector3>()});
+        SceneManager.MoveGameObjectToScene(characterController.gameObject, SceneManager.GetActiveScene());
     }
 }
