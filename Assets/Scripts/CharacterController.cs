@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using VContainer;
@@ -6,6 +7,8 @@ using VContainer;
 public class CharacterController : MonoBehaviour
 {
     [field: SerializeField] public NavMeshAgent NavMeshAgent;
+    public IEnumerable<Vector3> DestinationPoints => _destinationPoints.GetImmutable();
+    
     private FixedQueue<Vector3> _destinationPoints;
 
     [Inject]

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5025389409182358768
+--- !u!1 &5956137296173439125
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 350822182349928642}
-  - component: {fileID: 3311668089977394502}
+  - component: {fileID: 7418240947453075823}
+  - component: {fileID: 149026337782057293}
   m_Layer: 0
-  m_Name: RootScope
+  m_Name: CloudSaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &350822182349928642
+--- !u!4 &7418240947453075823
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5025389409182358768}
+  m_GameObject: {fileID: 5956137296173439125}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,24 +32,15 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3311668089977394502
+--- !u!114 &149026337782057293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5025389409182358768}
+  m_GameObject: {fileID: 5956137296173439125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfe2c36cbb13d50439240a03a96fcf1e, type: 3}
+  m_Script: {fileID: 11500000, guid: f7d09d17f6aa46158305d9fb60458945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
-  _gameConfig: {fileID: 11400000, guid: ee66ec423a97ee74aab1a2dcb66364d5, type: 2}
-  _sceneConfig: {fileID: 11400000, guid: 6bb695c52daf92a4faaf7ed61319b7e0, type: 2}
-  _characterControllerPrefab: {fileID: 5011737282008598501, guid: 878735e242338904b941930fb8f7aa57, type: 3}
-  _hudPrefab: {fileID: 1575969805772012435, guid: 7c2b5a9e5b045a143a34285ff571930b, type: 3}
-  _saveManagerPrefab: {fileID: 149026337782057293, guid: dcd717c41ab50384caf4ef8df2b57753, type: 3}

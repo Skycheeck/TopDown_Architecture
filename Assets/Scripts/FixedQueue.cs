@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 public class FixedQueue<T>
 {
@@ -27,4 +26,6 @@ public class FixedQueue<T>
     }
 
     public T Dequeue() => _queue.Dequeue();
+
+    public IEnumerable<T> GetImmutable() => _queue;
 }
