@@ -51,5 +51,4 @@ MonoBehaviour:
   _gameConfig: {fileID: 11400000, guid: ee66ec423a97ee74aab1a2dcb66364d5, type: 2}
   _sceneConfig: {fileID: 11400000, guid: 6bb695c52daf92a4faaf7ed61319b7e0, type: 2}
   _characterControllerPrefab: {fileID: 5011737282008598501, guid: 878735e242338904b941930fb8f7aa57, type: 3}
-  _hudPrefab: {fileID: 1575969805772012435, guid: 7c2b5a9e5b045a143a34285ff571930b, type: 3}
   _saveManagerPrefab: {fileID: 149026337782057293, guid: dcd717c41ab50384caf4ef8df2b57753, type: 3}

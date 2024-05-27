@@ -6,23 +6,25 @@ using VContainer.Unity;
 
 public class GameScope : LifetimeScope
 {
+    [SerializeField] private Canvas _hudPrefab;
     protected override async void Configure(IContainerBuilder builder)
     {
         GameObject level = CreateLevel();
-        Canvas hud = CreateHUD();
         CharacterController characterController = await CreateCharacter();
 
         CreateChild(builder =>
         {
-            builder.RegisterInstance(hud);
             builder.RegisterInstance(characterController);
             builder.Register<PlayerController>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<ExitHelper>(Lifetime.Scoped);
+            builder.Register<Canvas>(CreateHUD, Lifetime.Scoped);
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<Canvas>());
         });
     }
 
-    private Canvas CreateHUD()
+    private Canvas CreateHUD(IObjectResolver objectResolver)
     {
-        Canvas hud = Parent.Container.Resolve<IHUDFactory>().Create();
+        Canvas hud = objectResolver.Instantiate(_hudPrefab);
         SceneManager.MoveGameObjectToScene(hud.gameObject, SceneManager.GetActiveScene());
         return hud;
     }
@@ -36,7 +38,6 @@ public class GameScope : LifetimeScope
 
     private async UniTask<CharacterController> CreateCharacter()
     {
-        // PlayerProgress playerProgress = new() {DestinationPoints = Array.Empty<Vector3>()};
         PlayerProgress playerProgress = await Parent.Container.Resolve<SaveManager>().Load();
 
         CharacterController characterController =

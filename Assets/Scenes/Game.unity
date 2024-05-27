@@ -543,6 +543,7 @@ MonoBehaviour:
     TypeName: RootScope
   autoRun: 1
   autoInjectGameObjects: []
+  _hudPrefab: {fileID: 1575969805772012435, guid: 7c2b5a9e5b045a143a34285ff571930b, type: 3}
 --- !u!4 &1441071387
 Transform:
   m_ObjectHideFlags: 0

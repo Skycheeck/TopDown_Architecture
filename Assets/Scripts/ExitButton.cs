@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using VContainer;
 
 [RequireComponent(typeof(Button))]
 public class ExitButton : MonoBehaviour
 {
-    private SceneConfig _sceneConfig;
+    private ExitHelper _exitHelper;
 
     [Inject]
-    private void Construct(SceneConfig sceneConfig) => _sceneConfig = sceneConfig;
+    private void Construct(ExitHelper exitHelper) => _exitHelper = exitHelper;
 
-    private void Awake() => GetComponent<Button>().onClick.AddListener(
-        () => SceneManager.LoadScene(_sceneConfig.MenuSceneIndex));
+    private void Awake() => GetComponent<Button>().onClick.AddListener(() => _exitHelper.Exit());
 }
