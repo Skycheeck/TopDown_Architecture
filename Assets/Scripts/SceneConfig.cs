@@ -4,6 +4,5 @@
 public class SceneConfig : ScriptableObject
 {
     [field: SerializeField] public int BootSceneIndex { get; private set; }
-    [field: SerializeField] public int MenuSceneIndex { get; private set; }
     [field: SerializeField] public int GameSceneIndex { get; private set; }
 }

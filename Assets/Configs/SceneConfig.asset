@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ced3d45c0334ae09116d7a2ff56d079, type: 3}
   m_Name: SceneConfig
   m_EditorClassIdentifier: 
-  <MenuSceneIndex>k__BackingField: 1
-  <GameSceneIndex>k__BackingField: 2
+  <BootSceneIndex>k__BackingField: 0
+  <GameSceneIndex>k__BackingField: 1

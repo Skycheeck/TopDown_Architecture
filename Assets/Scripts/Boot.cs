@@ -33,7 +33,7 @@ public class Boot : IAsyncStartable
     {
         await UniTask.WaitForSeconds(2, cancellationToken: cancellation); //fake loading
         await _menuInputRequest.Request();
-        await SceneManager.LoadSceneAsync(_sceneConfig.MenuSceneIndex, LoadSceneMode.Single).ToUniTask(cancellationToken: cancellation);
+        await SceneManager.LoadSceneAsync(_sceneConfig.GameSceneIndex, LoadSceneMode.Single).ToUniTask(cancellationToken: cancellation);
         
         CreateLevel();
         CharacterController characterController = CreateCharacter(await _saveManager.Load());

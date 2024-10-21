@@ -28,6 +28,6 @@ public class ExitHelper
             Rotation = _characterController.transform.rotation,
             DestinationPoints = destinationPoints.ToArray()
         });
-        SceneManager.LoadScene(_sceneConfig.MenuSceneIndex);
+        SceneManager.LoadScene(_sceneConfig.BootSceneIndex);
     }
 }
