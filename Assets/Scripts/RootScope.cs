@@ -22,6 +22,7 @@ public class RootScope : LifetimeScope
         builder.RegisterInstance<ICharacterFactory, CharacterFactory>(new CharacterFactory(_characterControllerPrefab, this, _gameConfig));
         builder.Register(resolver => new MenuInputRequest(_menuPrefab, resolver), Lifetime.Singleton);
         builder.Register<IHUDFactory>(resolver => new HUDFactory(_hudPrefab, resolver), Lifetime.Singleton);
+        builder.Register<GameStarter>(Lifetime.Transient);
         builder.RegisterEntryPoint<Boot>();
     }
 

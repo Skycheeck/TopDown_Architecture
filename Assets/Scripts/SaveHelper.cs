@@ -1,17 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class ExitHelper
+public class SaveHelper
 {
     private readonly SaveManager _saveManager;
     private readonly CharacterController _characterController;
-    private readonly SceneConfig _sceneConfig;
 
-    public ExitHelper(SaveManager saveManager, CharacterController characterController, SceneConfig sceneConfig)
+    public SaveHelper(SaveManager saveManager, CharacterController characterController)
     {
-        _sceneConfig = sceneConfig;
         _saveManager = saveManager;
         _characterController = characterController;
     }
@@ -28,6 +25,5 @@ public class ExitHelper
             Rotation = _characterController.transform.rotation,
             DestinationPoints = destinationPoints.ToArray()
         });
-        SceneManager.LoadScene(_sceneConfig.BootSceneIndex);
     }
 }
