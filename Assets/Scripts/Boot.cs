@@ -1,17 +1,62 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using VContainer;
 using VContainer.Unity;
 
 public class Boot : IAsyncStartable 
 {
+    private readonly LifetimeScope _lifetimeScope;
     private readonly SceneConfig _sceneConfig;
+    private readonly GameConfig _gameConfig;
+    private readonly SaveManager _saveManager;
+    private readonly IHUDFactory _hudFactory;
+    private readonly ICharacterFactory _characterFactory;
+    private readonly IObjectResolver _objectResolver;
 
-    public Boot(SceneConfig sceneConfig) => _sceneConfig = sceneConfig;
+    public Boot(LifetimeScope lifetimeScope, SceneConfig sceneConfig, GameConfig gameConfig, SaveManager saveManager, 
+        IHUDFactory hudFactory, ICharacterFactory characterFactory, IObjectResolver objectResolver)
+    {
+        _lifetimeScope = lifetimeScope;
+        _sceneConfig = sceneConfig;
+        _gameConfig = gameConfig;
+        _saveManager = saveManager;
+        _hudFactory = hudFactory;
+        _characterFactory = characterFactory;
+        _objectResolver = objectResolver;
+    }
 
     public async UniTask StartAsync(CancellationToken cancellation)
     {
-        await UniTask.WaitForSeconds(2, cancellationToken: cancellation);
+        await UniTask.WaitForSeconds(2, cancellationToken: cancellation); //fake loading
         await SceneManager.LoadSceneAsync(_sceneConfig.MenuSceneIndex, LoadSceneMode.Single).ToUniTask(cancellationToken: cancellation);
+        
+        CreateLevel();
+        CharacterController characterController = CreateCharacter(await _saveManager.Load());
+        Canvas hud = _hudFactory.Create();
+
+        _lifetimeScope.CreateChild(builder =>
+        {
+            builder.RegisterInstance(characterController);
+            builder.RegisterInstance(hud);
+
+            builder.Register<PlayerController>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
+            builder.Register<ExitHelper>(Lifetime.Scoped);
+        });
+    }
+    
+    private GameObject CreateLevel()
+    {
+        GameObject level = _objectResolver.Instantiate(_gameConfig.Level);
+        SceneManager.MoveGameObjectToScene(level, SceneManager.GetActiveScene());
+        return level;
+    }
+
+    private CharacterController CreateCharacter(PlayerProgress playerProgress)
+    {
+        CharacterController characterController = _characterFactory.Create(playerProgress);
+        SceneManager.MoveGameObjectToScene(characterController.gameObject, SceneManager.GetActiveScene());
+        return characterController;
     }
 }
