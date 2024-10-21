@@ -16,10 +16,10 @@ public class RootScope : LifetimeScope
     protected override void Configure(IContainerBuilder builder)
     {
         RegisterSaveManager(builder);
+        RegisterEventSystem(builder);
         builder.RegisterInstance(_gameConfig);
         builder.RegisterInstance(_sceneConfig);
         builder.RegisterInstance<ICharacterFactory, CharacterFactory>(new CharacterFactory(_characterControllerPrefab, this, _gameConfig));
-        builder.RegisterInstance(Instantiate(_eventSystemPrefab));
         builder.Register(resolver => new MenuInputRequest(_menuPrefab, resolver), Lifetime.Singleton);
         builder.Register<IHUDFactory>(resolver => new HUDFactory(_hudPrefab, resolver), Lifetime.Singleton);
         builder.RegisterEntryPoint<Boot>();
@@ -30,5 +30,12 @@ public class RootScope : LifetimeScope
         SaveManager saveManager = Instantiate(_saveManagerPrefab);
         DontDestroyOnLoad(saveManager);
         builder.RegisterInstance(saveManager);
+    }
+
+    private void RegisterEventSystem(IContainerBuilder builder)
+    {
+        EventSystem eventSystem = Instantiate(_eventSystemPrefab);
+        DontDestroyOnLoad(eventSystem);
+        builder.RegisterInstance(eventSystem);
     }
 }
