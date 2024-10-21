@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,8 +17,6 @@ public class GameStarter
     private readonly ICharacterFactory _characterFactory;
     private readonly IObjectResolver _objectResolver;
 
-    private UniTaskCompletionSource _completionSource;
-
     public GameStarter(LifetimeScope lifetimeScope, SceneConfig sceneConfig, GameConfig gameConfig, SaveManager saveManager, MenuInputRequest menuInputRequest,
         IHUDFactory hudFactory, ICharacterFactory characterFactory, IObjectResolver objectResolver)
     {
@@ -33,14 +32,22 @@ public class GameStarter
 
     public async UniTask StartAsync(CancellationToken cancellation)
     {
-        _completionSource = new UniTaskCompletionSource();
-        
+        UniTaskCompletionSource completionSource = new();
+
         await UniTask.WaitForSeconds(2, cancellationToken: cancellation); //fake loading
-        await _menuInputRequest.Request();
+        MenuInputRequest.Result menuInputRequestResult = await _menuInputRequest.Request();
         await SceneManager.LoadSceneAsync(_sceneConfig.GameSceneIndex, LoadSceneMode.Single).ToUniTask(cancellationToken: cancellation);
         
+
+        PlayerProgress playerProgress = menuInputRequestResult switch
+        {
+            MenuInputRequest.Result.New => PlayerProgress.Empty,
+            MenuInputRequest.Result.Load => await _saveManager.Load(),
+            _ => throw new ArgumentOutOfRangeException()
+        };
+        
         CreateLevel();
-        CharacterController characterController = CreateCharacter(await _saveManager.Load());
+        CharacterController characterController = CreateCharacter(playerProgress);
         HUD hud = CreateHUD(_hudFactory);
 
         _lifetimeScope.CreateChild(builder =>
@@ -54,12 +61,12 @@ public class GameStarter
                 resolver.Resolve<HUD>().ExitButtonClicked += () =>
                 {
                     resolver.Resolve<SaveHelper>().Exit();
-                    _completionSource.TrySetResult();
+                    completionSource.TrySetResult();
                 };
             });
         });
 
-        await _completionSource.Task;
+        await completionSource.Task;
     }
     
     private GameObject CreateLevel()

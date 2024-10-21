@@ -5,7 +5,7 @@ using VContainer.Unity;
 
 public class MenuInputRequest
 {
-    private UniTaskCompletionSource _gameStarted;
+    private UniTaskCompletionSource<Result> _gameStarted;
     private readonly Menu _menuPrefab;
     private readonly IObjectResolver _objectResolver;
 
@@ -15,14 +15,19 @@ public class MenuInputRequest
         _menuPrefab = menuPrefab;
     }
     
-    public UniTask Request()
+    public UniTask<Result> Request()
     {
-        _gameStarted = new UniTaskCompletionSource();
+        _gameStarted = new UniTaskCompletionSource<Result>();
         Menu menu = _objectResolver.Instantiate(_menuPrefab);
         SceneManager.MoveGameObjectToScene(menu.gameObject, SceneManager.GetActiveScene());
-        menu.StartButtonClicked += MenuOnStartButtonClicked;
+        menu.NewButtonClicked += () => _gameStarted.TrySetResult(Result.New);
+        menu.LoadButtonClicked += () => _gameStarted.TrySetResult(Result.Load);
         return _gameStarted.Task;
     }
 
-    private void MenuOnStartButtonClicked() => _gameStarted.TrySetResult();
+    public enum Result
+    {
+        New,
+        Load
+    }
 }

@@ -15,9 +15,6 @@ public class CloudSaveManager : SaveManager
     {
         await UnityServices.InitializeAsync();
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        
-        // uncomment this if you want to clean up the progress on restart (not on exiting through a button)
-        //await Save(PlayerProgress.Empty); 
     }
 
     public override async UniTask<PlayerProgress> Load()
