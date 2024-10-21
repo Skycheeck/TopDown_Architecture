@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public interface IHUDFactory
+﻿public interface IHUDFactory
 {
-    Canvas Create();
+    HUD Create();
 }

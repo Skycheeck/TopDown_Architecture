@@ -8,6 +8,8 @@ public class RootScope : LifetimeScope
     [SerializeField] private SceneConfig _sceneConfig;
     [SerializeField] private CharacterController _characterControllerPrefab;
     [SerializeField] private SaveManager _saveManagerPrefab;
+    [SerializeField] private HUD _hudPrefab;
+    
     
     protected override void Configure(IContainerBuilder builder)
     {
@@ -15,6 +17,7 @@ public class RootScope : LifetimeScope
         builder.RegisterInstance(_gameConfig);
         builder.RegisterInstance(_sceneConfig);
         builder.RegisterInstance<ICharacterFactory, CharacterFactory>(new CharacterFactory(_characterControllerPrefab, this, _gameConfig));
+        builder.Register<IHUDFactory>(resolver => new HUDFactory(_hudPrefab, resolver), Lifetime.Singleton);
         builder.RegisterEntryPoint<Boot>();
     }
 

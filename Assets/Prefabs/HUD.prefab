@@ -94,7 +94,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 87.8
+  m_fontSize: 107.25
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 1575969805772012435}
   - component: {fileID: 6839451391431469277}
   - component: {fileID: 6246379501492319466}
+  - component: {fileID: 8870983624368158055}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -239,6 +240,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8870983624368158055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2274806076699986699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0714b440ab4125abd95f4cd72d9768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _exitButton: {fileID: 7447729973929743155}
 --- !u!1 &6646703939876702558
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +265,6 @@ GameObject:
   - component: {fileID: 7524321866652497461}
   - component: {fileID: 3325964454953286452}
   - component: {fileID: 7447729973929743155}
-  - component: {fileID: 8665878475097047016}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -361,18 +374,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8665878475097047016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6646703939876702558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea3cd9c7e2c046fbb4d13250bf6592f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7501062430758613243
 GameObject:
   m_ObjectHideFlags: 0

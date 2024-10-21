@@ -34,15 +34,15 @@ public class Boot : IAsyncStartable
         
         CreateLevel();
         CharacterController characterController = CreateCharacter(await _saveManager.Load());
-        Canvas hud = _hudFactory.Create();
+        HUD hud = CreateHUD(_hudFactory);
 
         _lifetimeScope.CreateChild(builder =>
         {
             builder.RegisterInstance(characterController);
             builder.RegisterInstance(hud);
-
             builder.Register<PlayerController>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
             builder.Register<ExitHelper>(Lifetime.Scoped);
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<HUD>().OnExitClicked += resolver.Resolve<ExitHelper>().Exit);
         });
     }
     
@@ -58,5 +58,11 @@ public class Boot : IAsyncStartable
         CharacterController characterController = _characterFactory.Create(playerProgress);
         SceneManager.MoveGameObjectToScene(characterController.gameObject, SceneManager.GetActiveScene());
         return characterController;
+    }
+    private HUD CreateHUD(IHUDFactory hudFactory)
+    {
+        HUD hud = hudFactory.Create();
+        SceneManager.MoveGameObjectToScene(hud.gameObject, SceneManager.GetActiveScene());
+        return hud;
     }
 }
