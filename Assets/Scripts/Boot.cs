@@ -11,13 +11,15 @@ public class Boot : IAsyncStartable
     private readonly SceneConfig _sceneConfig;
     private readonly GameConfig _gameConfig;
     private readonly SaveManager _saveManager;
+    private readonly MenuInputRequest _menuInputRequest;
     private readonly IHUDFactory _hudFactory;
     private readonly ICharacterFactory _characterFactory;
     private readonly IObjectResolver _objectResolver;
 
-    public Boot(LifetimeScope lifetimeScope, SceneConfig sceneConfig, GameConfig gameConfig, SaveManager saveManager, 
+    public Boot(LifetimeScope lifetimeScope, SceneConfig sceneConfig, GameConfig gameConfig, SaveManager saveManager, MenuInputRequest menuInputRequest,
         IHUDFactory hudFactory, ICharacterFactory characterFactory, IObjectResolver objectResolver)
     {
+        _menuInputRequest = menuInputRequest;
         _lifetimeScope = lifetimeScope;
         _sceneConfig = sceneConfig;
         _gameConfig = gameConfig;
@@ -30,6 +32,7 @@ public class Boot : IAsyncStartable
     public async UniTask StartAsync(CancellationToken cancellation)
     {
         await UniTask.WaitForSeconds(2, cancellationToken: cancellation); //fake loading
+        await _menuInputRequest.Request();
         await SceneManager.LoadSceneAsync(_sceneConfig.MenuSceneIndex, LoadSceneMode.Single).ToUniTask(cancellationToken: cancellation);
         
         CreateLevel();
@@ -42,7 +45,7 @@ public class Boot : IAsyncStartable
             builder.RegisterInstance(hud);
             builder.Register<PlayerController>(Lifetime.Scoped).AsImplementedInterfaces().AsSelf();
             builder.Register<ExitHelper>(Lifetime.Scoped);
-            builder.RegisterBuildCallback(resolver => resolver.Resolve<HUD>().OnExitClicked += resolver.Resolve<ExitHelper>().Exit);
+            builder.RegisterBuildCallback(resolver => resolver.Resolve<HUD>().ExitButtonClicked += resolver.Resolve<ExitHelper>().Exit);
         });
     }
     

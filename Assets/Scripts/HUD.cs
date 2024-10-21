@@ -6,7 +6,7 @@ public class HUD : MonoBehaviour
 {
     [SerializeField] private Button _exitButton;
     
-    public event Action OnExitClicked;
+    public event Action ExitButtonClicked;
 
-    private void Awake() => _exitButton.onClick.AddListener(() => OnExitClicked?.Invoke());
+    private void Start() => _exitButton.onClick.AddListener(() => ExitButtonClicked?.Invoke());
 }
